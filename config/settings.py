@@ -70,7 +70,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # 기본설정 외 Template을 찾을 경로 목록
         'DIRS': [
-        #     djangogirls/templates/ 폴더 추가
+        # djangogirls/templates/ 폴더 추가
             TEMPLATES_DIR
         ],
         'APP_DIRS': True,
@@ -136,3 +136,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# 정적 파일 찾는 경로 추가
+STATICFILES_DIRS = [
+    # djangogirls/static 폴더 path 추가
+    os.path.join(BASE_DIR, 'static')
+]
