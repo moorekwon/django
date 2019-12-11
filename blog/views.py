@@ -17,20 +17,25 @@ def post_list(request):
 
     # 파일 열기
     # open
-    cur_file_path = os.path.abspath(__file__)
-    blog_dir_path = os.path.dirname(cur_file_path)
-    root_dir_path = os.path.dirname(blog_dir_path)
-    templates_dir_path = os.path.join(root_dir_path, 'templates')
-    post_list_html_path = os.path.join(templates_dir_path, 'post_list.html')
+    # cur_file_path = os.path.abspath(__file__)
+    # blog_dir_path = os.path.dirname(cur_file_path)
+    # root_dir_path = os.path.dirname(blog_dir_path)
+    # templates_dir_path = os.path.join(root_dir_path, 'templates')
+    # post_list_html_path = os.path.join(templates_dir_path, 'post_list.html')
+    #
+    # # print(cur_file_path)
+    # # print(blog_dir_path)
+    #
+    # print(templates_dir_path)
+    # # /home/hyojinkwon/projects/wps12th/djangogirls/templates
+    #
+    # f = open(post_list_html_path, 'rt')
+    # html = f.read()
+    # f.close()
+    #
+    # return HttpResponse(html)
 
-    # print(cur_file_path)
-    # print(blog_dir_path)
 
-    print(templates_dir_path)
-    # /home/hyojinkwon/projects/wps12th/djangogirls/templates
-
-    f = open(post_list_html_path, 'rt')
-    html = f.read()
-    f.close()
-
-    return HttpResponse(html)
+    # Template을 찾을 경로에서 post_list.html을 찾아 text로 만들고 HttpResponse 형태로 돌려줌
+    # shortcut 함수
+    return render(request, 'post_list.html')
