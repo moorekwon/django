@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # PYPI 패키지
+    # shell_plus를 쓰기 위한 library
+    'django_extensions',
+
     # 패키지(application 취급)
     'blog'
 ]
