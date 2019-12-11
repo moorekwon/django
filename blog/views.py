@@ -1,7 +1,5 @@
-import os
-from django.http import HttpResponse
 from django.shortcuts import render
-
+from blog.models import Post
 
 def post_list(request):
     # 상위 폴더(blog)의
@@ -36,6 +34,12 @@ def post_list(request):
     # return HttpResponse(html)
 
 
+
+    posts = Post.objects.all()
+    context = {
+        'posts': posts
+    }
+
     # Template을 찾을 경로에서 post_list.html을 찾아 text로 만들고 HttpResponse 형태로 돌려줌
     # shortcut 함수
-    return render(request, 'post_list.html')
+    return render(request, 'post_list.html', context)
