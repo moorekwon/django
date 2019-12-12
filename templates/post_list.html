@@ -4,7 +4,10 @@
 {% for post in posts %}
 <div class="card mb-3">
     <div class="card-body">
-        <h5 class="card-title">{{ post.title }}</h5>
+<!--        링크 추가, 클릭 시 해당하는 /post-detail/어딘가/로 이동-->
+        <h5 class="card-title">
+            <a href="/post-detail/{{ post.pk }}/">{{ post.title }}</a>
+        </h5>
         <p class="card-text">{{ post.text|linebreaksbr|truncatechars:250 }}</p>
         <div class="text-right">
             <span>{{ post.created_date }}</span>
