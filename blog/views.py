@@ -83,12 +83,40 @@ def post_detail(request, pk):
     return render(request, 'post_detail.html', context)
 
 def post_add(request):
-    # URL: /posts/add/
-    # View: post_add 함수
-    # Tmeplate: post_add.html
-    # form 태그 내부에
-    # input 한 개, textarea 한 개, button[type=submit] 한 개
+    # print(request.POST)
 
-    # base.html의 nav 안에 /posts/add/로의 링크 하나 추가
-    # 링크 텍스트: Post Add
-    return render(request, 'post_add.html')
+    # 요청의 method에 따라서 분기
+    if request.method == 'POST':
+        # request.POST에 담긴 title, text를 HttpResponse를 사용해 리턴
+        # title: <입력받은 제목>, text: <입력받은 텍스트>
+        # 위 문자열 리턴
+        author = request.user
+        title = request.POST['title']
+        text = request.POST['text']
+        # print(title, text)
+
+        # 위 3개 값을 사용해 새로운 Post 생성
+        # 생성한 Post의 title, created_date를 HttpResponse에 문자열로 전달
+        post = Post.objects.create(
+            author=author,
+            title=title,
+            text=text
+        )
+
+        result = f'title: {post.title}, created_date: {post.created_date}'
+        return HttpResponse(result)
+    else:
+        # URL: /posts/add/
+        # View: post_add 함수
+        # Tmeplate: post_add.html
+        # form 태그 내부에
+        # input 한 개, textarea 한 개, button[type=submit] 한 개
+
+        # base.html의 nav 안에 /posts/add/로의 링크 하나 추가
+        # 링크 텍스트: Post Add
+        return render(request, 'post_add.html')
+
+
+
+
+
