@@ -81,3 +81,14 @@ def post_detail(request, pk):
     # post_detail.html에서는 전달받은 'post' 변수의 title, author, text, created_date, published_date를 출력
 
     return render(request, 'post_detail.html', context)
+
+def post_add(request):
+    # URL: /posts/add/
+    # View: post_add 함수
+    # Tmeplate: post_add.html
+    # form 태그 내부에
+    # input 한 개, textarea 한 개, button[type=submit] 한 개
+
+    # base.html의 nav 안에 /posts/add/로의 링크 하나 추가
+    # 링크 텍스트: Post Add
+    return render(request, 'post_add.html')
