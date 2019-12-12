@@ -3,9 +3,11 @@
 {% block content %}
 
 <div>
-    <form action="">
+    <form action="" method="POST">
+<!--        작성 버튼 누를 시 뜨는 403 forbidden 창 막기(보안 관련 문제)-->
+        {% csrf_token %}
         <div class="form-group">
-            <label for="">제목</label><input type="text">
+            <label for="">제목</label>
             <input name="title" type="text" class="form-control">
         </div>
         <div class="form-group">
