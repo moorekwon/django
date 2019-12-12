@@ -1,5 +1,5 @@
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
 from blog.models import Post
 
 def post_list(request):
@@ -39,7 +39,10 @@ def post_list(request):
     # Post.objects.무언가...를 실행한 결과는 QuerySet 객체가 됨
     # context라는 dict를 생성하며 'posts' 키에 위 posts 변수를 value로 사용하도록 함
     # render의 3번째 위치인자로 위 context 변수를 전달
-    posts = Post.objects.all()
+
+    # posts = Post.objects.all()
+    # 역순
+    posts = Post.objects.order_by('-pk')
     context = {
         'posts': posts
     }
@@ -82,6 +85,7 @@ def post_detail(request, pk):
 
     return render(request, 'post_detail.html', context)
 
+
 def post_add(request):
     # print(request.POST)
 
@@ -104,11 +108,15 @@ def post_add(request):
         )
 
         result = f'title: {post.title}, created_date: {post.created_date}'
-        return HttpResponse(result)
+        # return HttpResponse(result)
+        from django.urls import reverse
+        # post_list_url = reverse('url-name-post-list')
+        # return HttpResponseRedirect('post_list_url')
+        return redirect('url-name-post-list')
     else:
         # URL: /posts/add/
         # View: post_add 함수
-        # Tmeplate: post_add.html
+        # Template: post_add.html
         # form 태그 내부에
         # input 한 개, textarea 한 개, button[type=submit] 한 개
 
@@ -117,6 +125,33 @@ def post_add(request):
         return render(request, 'post_add.html')
 
 
+def post_delete(request, pk):
+    # pk에 해당하는 Post 삭제
+    # 삭제 후 post_list 페이지로 이동
+    pass
 
+def post_edit(request, pk):
+    # pk에 해당하는 Post 수
+    if request.method == 'POST':
+        # request.POST로 전달된 title, text 내용 사용
+        # pk에 해당하는 Post의 해당 필드를 수정하고 save()
+        # 이후 해당 Post의 post-detail 화면으로 이동
+        pass
+    else:
+        # 수정할 수 있는 form이 존재하는 화면을 보여줌
+        # 화면의 form에는 pk에 해당하는 Post의 title, text 값이 들어있어야 함(수정이므로)
+        pass
 
+def post_publish(request, pk):
+    # pk에 해당하는 Post의 published_date 업데이트
+    # 요청시점의 시간을 해당 Post의 published_date에 기록할 수 있도록 함
+    # 완료 후 post-detail로 이동
+    # 결과를 볼 수 있도록 리스트 및 디테일 홤녀에서 published_date도 출력하도록 함
+    pass
+
+def post_unpublish(request, pk):
+    # pk에 해당하는 Post의 published_date에 None 대입 후 save()
+    # 완료 후 post-detail로 이동
+    # 결과를 볼 수 있도록, 리스트 및 디테일 화면에서 published_date 출력하도록 함
+    pass
 
