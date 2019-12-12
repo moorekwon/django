@@ -60,10 +60,10 @@ def post_detail(request, pk):
 
     # try-except 구문 사용
     # pk에 해당하는 Post가 없는 경우, HttpResponse('없음')을 돌려주도록 함
-    # try:
-    #     post = Post.objects.get(pk=pk)
-    # except:
-    #     return HttpResponse('없음!')
+    try:
+        post = Post.objects.get(pk=pk)
+    except:
+        return HttpResponse('없음!')
 
     post = get_object_or_404(Post, pk=pk)
 
