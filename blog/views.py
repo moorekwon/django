@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
 from blog.models import Post
 
 def post_list(request):
@@ -48,19 +49,35 @@ def post_list(request):
     return render(request, 'post_list.html', context)
 
 
-def post_detail(request):
+def post_detail(request, pk):
+    print('post_detail request', request)
+    print('post_detail pk', pk)
+    # 이 view 함수의 매개변수로 전달되는 'pk'를 사용
+    # 전달받은 'pk' 값이 자신의 'pk' DB column 값과 같은 Post를 post 변수에 저장
+    # 이후 pk에 따라 /post-detail/에 접근했을 때, 다른 Post가 출력되는지 확인
+    # posts = Post.objects.filter(pk=pk)
+    # post = posts[0]
+
+    # try-except 구문 사용
+    # pk에 해당하는 Post가 없는 경우, HttpResponse('없음')을 돌려주도록 함
+    # try:
+    #     post = Post.objects.get(pk=pk)
+    # except:
+    #     return HttpResponse('없음!')
+
+    post = get_object_or_404(Post, pk=pk)
+
     # URL: /post-detail/
     # View: post_detail
     # Template: post_detail.html
 
     # 전체 Post 목록(Post 전체 QuerySet) 중 [0] index에 해당하는 Post 객체 하나를 post 변수에 할당
+    # post = Post.objects.all()[0]
     # 'context'라는 이름의 dict를 만들어 'post' key 위에 위 post 변수를 value로 사용
-    # 이 context 변수를 render의 3번째 인자로 전달
-    # post_detail.html에서는 전달받은 'post' 변수의 title, author, text, created_date, published_date를 출력
-    post = Post.objects.all()[0]
     context = {
         'post': post
     }
-
+    # 이 context 변수를 render의 3번째 인자로 전달
+    # post_detail.html에서는 전달받은 'post' 변수의 title, author, text, created_date, published_date를 출력
 
     return render(request, 'post_detail.html', context)
