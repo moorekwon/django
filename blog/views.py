@@ -1,5 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
+
 from blog.models import Post
 
 
@@ -204,11 +206,18 @@ def post_publish(request, pk):
     # 요청시점의 시간을 해당 Post의 published_date에 기록할 수 있도록 함
     # 완료 후 post-detail로 이동
     # 결과를 볼 수 있도록 리스트 및 디테일 홤녀에서 published_date도 출력하도록 함
-    pass
+    post = Post.objects.get(pk=pk)
+    post.published_date = timezone.now()
+    post.save()
+    return redirect('url-name-post-detail', pk=pk)
 
 
 def post_unpublish(request, pk):
     # pk에 해당하는 Post의 published_date에 None 대입 후 save()
     # 완료 후 post-detail로 이동
     # 결과를 볼 수 있도록, 리스트 및 디테일 화면에서 published_date 출력하도록 함
+    post = Post.objects.get(pk=pk)
+    post.published_date = None
+    post.save()
+    return redirect('url-name-post-detail', pk=pk)
     pass
