@@ -181,13 +181,16 @@ def post_edit(request, pk):
 
     # 답안
     if request.method == 'POST':
-        post = Post.objects.get(pk=pk)
         title = request.POST['title']
         text = request.POST['text']
+
+        post = Post.objects.get(pk=pk)
+
         post.title = title
         post.text = text
         post.save()
-        return redirect('url-name-post-detail', pk)
+
+        return redirect('url-name-post-detail', pk=pk)
     else:
         post = Post.objects.get(pk=pk)
         context = {
