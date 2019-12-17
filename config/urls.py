@@ -26,5 +26,6 @@ urlpatterns = [
     # path('post-delete/<int:pk>/', post_delete, name='url-name-post-delete'),
     path('posts/<int:pk>/delete/', post_delete, name='url-name-post-delete'),
     path('posts/<int:pk>/delete/confirm/', post_delete_confirm, name='url-name-post-delete-confirm'),
-    path('post-edit/<int:pk>/', post_edit, name='url-name-post-edit')
+    path('posts/<int:pk>/edit', post_edit, name='url-name-post-edit'),
+    # path('post-edit/<int:pk>/', post_edit, name='url-name-post-edit')
 ]

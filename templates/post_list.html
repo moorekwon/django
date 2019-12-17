@@ -18,7 +18,8 @@
 <!--                </form>-->
 <!--                <a href="/posts/{{ post.pk }}/delete">Delete</a>-->
                 <a href="{% url 'url-name-post-delete-confirm' pk=post.pk %}" class="btn btn-danger btn-sm">Delete</a>
-                <button class="btn btn-info btn-sm">Edit</button>
+                <a href="{% url 'url-name-post-edit' pk=post.pk %}" class="btn btn-info btn-sm">Edit</a>
+<!--                <button class="btn btn-info btn-sm">Edit</button>-->
             </div>
             <div class="text-right">
                 <span>{{ post.created_date }}</span>

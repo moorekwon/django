@@ -122,16 +122,16 @@ def post_add(request):
         # 링크 텍스트: Post Add
         return render(request, 'post_add.html')
 
+
 def post_delete_confirm(request, pk):
-#     "정말 이 글을 삭제하시겠습니까?"
-#     글 제목과 작성일자 보여줌
-#     delete 버튼 한번더 누르면 삭제 후 post-list로 redirect
+    #     "정말 이 글을 삭제하시겠습니까?"
+    #     글 제목과 작성일자 보여줌
+    #     delete 버튼 한번더 누르면 삭제 후 post-list로 redirect
     post = Post.objects.get(pk=pk)
     context = {
         'post': post
     }
     return render(request, 'post_delete_confirm.html', context)
-
 
 
 def post_delete(request, pk):
@@ -144,8 +144,7 @@ def post_delete(request, pk):
     # # return render(request, 'post_list.html')
     # return redirect('url-name-post-list')
 
-
-#     답안
+    #     답안
     if request.method == 'POST':
         post = Post.objects.get(pk=pk)
         post.delete()
@@ -154,30 +153,46 @@ def post_delete(request, pk):
 
 def post_edit(request, pk):
     # pk에 해당하는 Post 수
-    if request.method == 'POST':
-        # request.POST로 전달된 title, text 내용 사용
-        # pk에 해당하는 Post의 해당 필드를 수정하고 save()
-        # 이후 해당 Post의 post-detail 화면으로 이동
-        post = Post.objects.get(pk=pk)
+    # if request.method == 'POST':
+    #     # request.POST로 전달된 title, text 내용 사용
+    #     # pk에 해당하는 Post의 해당 필드를 수정하고 save()
+    #     # 이후 해당 Post의 post-detail 화면으로 이동
+    #     post = Post.objects.get(pk=pk)
+    #
+    #     title = request.POST['title']
+    #     text = request.POST['text']
+    #     # print(f'title: {title}, text: {text}')
+    #
+    #     post.title = title
+    #     post.text = text
+    #     post.save()
+    #
+    #     return redirect('url-name-post-detail', pk)
+    #
+    # else:
+    #     # 수정할 수 있는 form이 존재하는 화면을 보여줌
+    #     # 화면의 form에는 pk에 해당하는 Post의 title, text 값이 들어있어야 함(수정이므로)
+    #     post = Post.objects.get(pk=pk)
+    #     context = {
+    #         'post': post
+    #     }
+    #     print(post)
+    #     return render(request, 'post_edit.html', context)
 
+    # 답안
+    if request.method == 'POST':
+        post = Post.objects.get(pk=pk)
         title = request.POST['title']
         text = request.POST['text']
-        # print(f'title: {title}, text: {text}')
-
         post.title = title
         post.text = text
         post.save()
-
         return redirect('url-name-post-detail', pk)
-
     else:
-        # 수정할 수 있는 form이 존재하는 화면을 보여줌
-        # 화면의 form에는 pk에 해당하는 Post의 title, text 값이 들어있어야 함(수정이므로)
         post = Post.objects.get(pk=pk)
         context = {
             'post': post
         }
-        print(post)
         return render(request, 'post_edit.html', context)
 
 
