@@ -122,6 +122,17 @@ def post_add(request):
         # 링크 텍스트: Post Add
         return render(request, 'post_add.html')
 
+def post_delete_confirm(request, pk):
+#     "정말 이 글을 삭제하시겠습니까?"
+#     글 제목과 작성일자 보여줌
+#     delete 버튼 한번더 누르면 삭제 후 post-list로 redirect
+    post = Post.objects.get(pk=pk)
+    context = {
+        'post': post
+    }
+    return render(request, 'post_delete_confirm.html', context)
+
+
 
 def post_delete(request, pk):
     # # pk에 해당하는 Post 삭제
