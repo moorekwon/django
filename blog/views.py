@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from blog.models import Post
 
+
 def post_list(request):
     # 상위 폴더(blog)의
     # 상위 폴더(djangogirls)의
@@ -34,7 +35,6 @@ def post_list(request):
     #
     # return HttpResponse(html)
 
-
     # posts라는 변수에 전체 Post를 갖는 QuerySet 객체를 전달
     # Post.objects.무언가...를 실행한 결과는 QuerySet 객체가 됨
     # context라는 dict를 생성하며 'posts' 키에 위 posts 변수를 value로 사용하도록 함
@@ -53,8 +53,6 @@ def post_list(request):
 
 
 def post_detail(request, pk):
-    print('post_detail request', request)
-    print('post_detail pk', pk)
     # 이 view 함수의 매개변수로 전달되는 'pk'를 사용
     # 전달받은 'pk' 값이 자신의 'pk' DB column 값과 같은 Post를 post 변수에 저장
     # 이후 pk에 따라 /post-detail/에 접근했을 때, 다른 Post가 출력되는지 확인
@@ -126,9 +124,22 @@ def post_add(request):
 
 
 def post_delete(request, pk):
-    # pk에 해당하는 Post 삭제
-    # 삭제 후 post_list 페이지로 이동
-    pass
+    # # pk에 해당하는 Post 삭제
+    # # 삭제 후 post_list 페이지로 이동
+    # post = Post.objects.filter(pk=pk)
+    # # print(post)
+    # post.delete()
+    #
+    # # return render(request, 'post_list.html')
+    # return redirect('url-name-post-list')
+
+
+#     답안
+    if request.method == 'POST':
+        post = Post.objects.get(pk=pk)
+        post.delete()
+        return redirect('url-name-post-list')
+
 
 def post_edit(request, pk):
     # pk에 해당하는 Post 수
@@ -136,11 +147,28 @@ def post_edit(request, pk):
         # request.POST로 전달된 title, text 내용 사용
         # pk에 해당하는 Post의 해당 필드를 수정하고 save()
         # 이후 해당 Post의 post-detail 화면으로 이동
-        pass
+        post = Post.objects.get(pk=pk)
+
+        title = request.POST['title']
+        text = request.POST['text']
+        # print(f'title: {title}, text: {text}')
+
+        post.title = title
+        post.text = text
+        post.save()
+
+        return redirect('url-name-post-detail', pk)
+
     else:
         # 수정할 수 있는 form이 존재하는 화면을 보여줌
         # 화면의 form에는 pk에 해당하는 Post의 title, text 값이 들어있어야 함(수정이므로)
-        pass
+        post = Post.objects.get(pk=pk)
+        context = {
+            'post': post
+        }
+        print(post)
+        return render(request, 'post_edit.html', context)
+
 
 def post_publish(request, pk):
     # pk에 해당하는 Post의 published_date 업데이트
@@ -149,9 +177,9 @@ def post_publish(request, pk):
     # 결과를 볼 수 있도록 리스트 및 디테일 홤녀에서 published_date도 출력하도록 함
     pass
 
+
 def post_unpublish(request, pk):
     # pk에 해당하는 Post의 published_date에 None 대입 후 save()
     # 완료 후 post-detail로 이동
     # 결과를 볼 수 있도록, 리스트 및 디테일 화면에서 published_date 출력하도록 함
     pass
-
